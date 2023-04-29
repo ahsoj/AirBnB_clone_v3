@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """retrieve state objects to api"""
 
-import sys
+# import sys
 from flask import jsonify, make_response, abort, request
-sys.path.insert(1, "/AirBnB_clone_v3")
+# sys.path.insert(1, "/AirBnB_clone_v3")
 from api.v1.views import app_views
 from models import storage
 from models.state import State
