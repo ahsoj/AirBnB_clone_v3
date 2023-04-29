@@ -42,8 +42,8 @@ def post_city(state_id):
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     kwargs = request.get_json()
-    # kwargs['state_id'] = state_id
-    new_city = State(**kwargs)  # request.get_json())
+    kwargs['state_id'] = state_id
+    new_city = State(**kwargs)
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
@@ -56,7 +56,7 @@ def update_city(city_id):
     update_city = storage.get("City", city_id)
     if update_city is not None:
         for key, value in request.get_json().items():
-            if key not in ['id', 'created_at', 'updated_at']:
+            if key not in ['id', 'state_id', 'created_at', 'updated_at']:
                 setattr(update_city, key, value)
         update_city.save()
         return make_response(jsonify(update_city.to_dict()), 200)
