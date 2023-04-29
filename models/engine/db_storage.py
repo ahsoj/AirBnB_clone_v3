@@ -77,7 +77,10 @@ class DBStorage:
           cls: class
           rType: {} | None
         """
-        if cls is not None and issubclass(type(cls), BaseModel):
+        if cls is not None and isinstance(cls, str)\
+                and id is not None and isinstance(id, str)\
+                    and cls in classes:
+            cls = classes[cls]
             return self.__session.query(cls).filter(cls.id == id).first()
         return None
 

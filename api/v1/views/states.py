@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """retrieve state objects to api"""
 
-# import sys
+import sys
 from flask import jsonify, make_response, abort, request
-# sys.path.insert(1, "/AirBnB_clone_v3")
+sys.path.insert(1, "/AirBnB_clone_v3")
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -18,13 +18,14 @@ def all_states():
     return jsonify(_list_of_dict)
 
 
-@app_views.route('/states/<state_id>/', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/states/<string:state_id>/', methods=['GET'], strict_slashes=False)
 def single_state(state_id):
     """if state_id not None return singel state_info"""
     state_info = storage.get("State", state_id) 
-    if state_info is not None:
-        return jsonify(state_info.to_dict())
-    abort(404)
+    if state_info is None:
+        abort(404)
+    return jsonify(state_info.to_dict())
 
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
