@@ -2,9 +2,9 @@
 """initiaize the api"""
 
 from flask import jsonify
-import sys
-sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
-from api.v1.views import app_views # _classes
+# import sys
+# sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
+from api.v1.views import app_views  # _classes
 from models import storage
 
 _classes = {
