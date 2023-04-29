@@ -60,7 +60,7 @@ def update_city(city_id):
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(update_city, key, value)
     update_city.save()
-    return make_response(jsonify(update_city.to_dict()), 200) 
+    return make_response(jsonify(update_city.to_dict()), 200)
 
 
 @app_views.route(
