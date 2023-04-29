@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """retrieve user objects to api"""
-import sys
+
+# import sys
 from flask import jsonify, make_response, abort, request
-sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
+# sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -17,8 +18,7 @@ def all_users():
     return jsonify(_list_of_dict)
 
 
-@app_views.route('/users/<user_id>',\
-   methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<user_id>/', methods=['GET'], strict_slashes=False)
 def single_user(user_id):
     """if user_id not None return singel user_info"""
     user_info = storage.get("User", user_id)
@@ -41,8 +41,7 @@ def post_user():
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>',\
-    methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """if user_id is not None find and update user"""
     if not request.get_json():
@@ -56,11 +55,9 @@ def update_user(user_id):
         return make_response(jsonify(update_user.to_dict()), 200)
     else:
         abort(404)
-    
 
 
-@app_views.route('/users/<user_id>',\
-    methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """if user_id is not None find and \
         delete uer_info"""
