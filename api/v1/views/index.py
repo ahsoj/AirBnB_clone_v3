@@ -1,4 +1,5 @@
-#!/usr.bin.python3
+#!/usr/bin/python3
+"""initiaize the api"""
 
 from flask import jsonify
 import sys
