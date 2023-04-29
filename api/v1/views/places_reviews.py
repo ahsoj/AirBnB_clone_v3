@@ -5,7 +5,7 @@ from flask import jsonify, abort, make_response, request
 # import sys
 # sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from models import storage
-from models.city import Review
+from models.review import Review
 from models.place import Place
 from api.v1.views import app_views
 
@@ -15,12 +15,22 @@ from api.v1.views import app_views
 def review_by_place(place_id):
     """list all reviews"""
     place = storage.get("Place", place_id)
+    print(dir(place), "Done")
     if place is not None:
-        _list_of_city = []
+        _list_of_review = []
         for review in place.reviews:
-            _list_of_city.append(place.to_dict())
-        return jsonify(_list_of_city)
+            _list_of_review.append(place.to_dict())
+        return jsonify(_list_of_review)
     abort(404)
+
+
+@app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
+def get_tmp():
+    place = []
+    for review in list(storage.all("Review").values()):
+        place.append(review.to_dict())
+    return jsonify(place)
+    # abort(404)
 
 
 @app_views.route(
@@ -40,8 +50,8 @@ def post_review(place_id):
     """post new review"""
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
+    if 'text' not in request.get_json():
+        return make_response(jsonify({"error": "Missing text"}), 400)
     if 'user_id' not in request.get_json():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     kwargs = request.get_json()
@@ -55,31 +65,32 @@ def post_review(place_id):
     return make_response(jsonify(new_review.to_dict()), 201)
 
 
-@app_views.route('/places/<place_id>/', methods=['PUT'], strict_slashes=False)
-def update_place(place_id):
-    """if place_id is not None find and update place"""
+@app_views.route(
+    '/reviews/<review_id>/', methods=['PUT'], strict_slashes=False)
+def update_review(review_id):
+    """if place_id is not None find and update review"""
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    update_place = storage.get("Place", place_id)
-    if update_place is not None:
+    update_review = storage.get("Review", review_id)
+    if update_review is not None:
         for key, value in request.get_json().items():
             if key not in \
-                    ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
-                setattr(update_city, key, value)
-        update_city.save()
-        return make_response(jsonify(update_city.to_dict()), 200)
+                    ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+                setattr(update_review, key, value)
+        update_review.save()
+        return make_response(jsonify(update_review.to_dict()), 200)
     else:
         abort(404)
 
 
 @app_views.route(
-    '/places/<place_id>/', methods=['DELETE'], strict_slashes=False)
-def delete_place(place_id):
+    '/reviews/<review_id>/', methods=['DELETE'], strict_slashes=False)
+def delete_review(place_id):
     """if place_id is not None find and \
         delete place_info"""
-    place_info = storage.get("Place", place_id)
-    if place_info is None:
+    review_info = storage.get("Review", review_id)
+    if review_info is None:
         abort(404)
-    place_info.delete()
+    review_info.delete()
     storage.save()
     return make_response(jsonify({}), 200)
