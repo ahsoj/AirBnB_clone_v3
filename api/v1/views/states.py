@@ -19,7 +19,7 @@ def all_states():
 
 
 @app_views.route(
-    '/states/<string:state_id>/', methods=['GET'], strict_slashes=False)
+    '/states/<state_id>/', methods=['GET'], strict_slashes=False)
 def single_state(state_id):
     """if state_id not None return singel state_info"""
     state_info = storage.get("State", state_id)
@@ -52,8 +52,7 @@ def update_state(state_id):
                 setattr(update_state, key, value)
         update_state.save()
         return make_response(jsonify(update_state.to_dict()), 200)
-    else:
-        abort(404)
+    abort(404)
 
 @app_views.route(
         '/states/<state_id>/', methods=['DELETE'], strict_slashes=False)
