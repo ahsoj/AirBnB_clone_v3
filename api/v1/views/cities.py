@@ -17,7 +17,6 @@ def city_by_state(state_id):
     states = storage.get("State", state_id)
     if states is not None:
         _list_of_city = []
-        # print(dir(states))
         for city in states.cities:
             _list_of_city.append(city.to_dict())
         return jsonify(_list_of_city)
@@ -29,7 +28,6 @@ def city_by_state(state_id):
 def get_city(city_id=None):
     """retrieve city by id"""
     city = storage.get("City", city_id)
-    print(dir(city))
     if city is not None:
         return jsonify(city.to_dict())
     abort(404)
@@ -44,7 +42,7 @@ def post_city(state_id):
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     kwargs = request.get_json()
-    kwargs['state_id'] = state_id
+    # kwargs['state_id'] = state_id
     new_city = State(**kwargs)  # request.get_json())
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
