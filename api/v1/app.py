@@ -2,9 +2,9 @@
 """create v1 api"""
 
 from flask import Flask, jsonify, make_response
-import sys
+# import sys
 import os
-sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
+# sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from api.v1.views import app_views
 from models import storage
 
