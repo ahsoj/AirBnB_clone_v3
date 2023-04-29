@@ -15,11 +15,11 @@ from api.v1.views import app_views
 def review_by_place(place_id):
     """list all reviews"""
     place = storage.get("Place", place_id)
-    print(dir(place), "Done")
+    # print(dir(place), "Done")
     if place is not None:
         _list_of_review = []
         for review in place.reviews:
-            _list_of_review.append(place.to_dict())
+            _list_of_review.append(review.to_dict())
         return jsonify(_list_of_review)
     abort(404)
 
@@ -85,9 +85,9 @@ def update_review(review_id):
 
 @app_views.route(
     '/reviews/<review_id>/', methods=['DELETE'], strict_slashes=False)
-def delete_review(place_id):
-    """if place_id is not None find and \
-        delete place_info"""
+def delete_review(review_id):
+    """if review_id is not None find and \
+        delete review_info"""
     review_info = storage.get("Review", review_id)
     if review_info is None:
         abort(404)
