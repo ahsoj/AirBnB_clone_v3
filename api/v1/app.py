@@ -7,9 +7,11 @@ import os
 # sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from api.v1.views import app_views
 from models import storage
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 host = os.environ.get('HBNB_API_HOST') or '0.0.0.0'
 port = os.environ.get('HBNB_API_PORT') or 5000
