@@ -65,8 +65,8 @@ class FileStorage:
           rType: {} | None
         """
         if cls is not None and isinstance(cls, str)\
-             and id is not None and isinstance(id, str)\
-                 and cls in classes:
+           and id is not None and isinstance(id, str)\
+           and cls in classes:
             return self.__objects.get("{}.{}".format(cls, id), None)
         else:
             return None
@@ -76,7 +76,9 @@ class FileStorage:
           cls: class
           rType: int{}
         """
-        return len(self.all(cls))
+        return len(
+                self.all(cls) if isinstance(cls, str)
+                and cls in classes else self.__objects)
 
     def delete(self, obj=None):
         """

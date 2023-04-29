@@ -78,8 +78,7 @@ class DBStorage:
           rType: {} | None
         """
         if cls is not None and isinstance(cls, str)\
-                and id is not None and isinstance(id, str)\
-                    and cls in classes:
+                and id is not None and isinstance(id, str) and cls in classes:
             cls = classes[cls]
             return self.__session.query(cls).filter(cls.id == id).first()
         return None
@@ -89,7 +88,13 @@ class DBStorage:
           cls: class
           rType: int{}
         """
-        return len(self.all(cls))
+        if isinstance(cls, str) and cls in classes:
+            return self.__session.query(classes[cls]).count()
+        elif cls is None:
+            count = 0
+            for _, cls in classes.items():
+                count += self.__session.query(cls).count()
+        return count
 
     def close(self):
         """call remove() method on the private session attribute"""
