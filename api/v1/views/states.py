@@ -22,7 +22,7 @@ def all_states():
     '/states/<string:state_id>/', methods=['GET'], strict_slashes=False)
 def single_state(state_id):
     """if state_id not None return singel state_info"""
-    state_info = storage.get("State", state_id) 
+    state_info = storage.get("State", state_id)
     if state_info is None:
         abort(404)
     return jsonify(state_info.to_dict())
