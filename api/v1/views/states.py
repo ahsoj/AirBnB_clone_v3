@@ -53,7 +53,7 @@ def update_state(state_id):
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(update_state, key, value)
         update_state.save()
-        return make_response(jsonify(update_state.to_dict()), 200)
+        return jsonify(update_state.to_dict())
     else:
         abort(404)
 
@@ -67,4 +67,4 @@ def delete_state(state_id):
         abort(404)
     state_info.delete()
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({})
