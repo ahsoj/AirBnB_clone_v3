@@ -24,16 +24,6 @@ def review_by_place(place_id):
         abort(404)
 
 
-
-#@app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
-#def get_tmp():
-   # place = []
-    #for review in list(storage.all("Review").values()):
-     #   place.append(review.to_dict())
-   # return jsonify(place)
-    # abort(404)'''
-
-
 @app_views.route(
     '/reviews/<review_id>/', methods=['GET'], strict_slashes=False)
 def get_review(review_id=None):
