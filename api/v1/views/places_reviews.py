@@ -6,7 +6,7 @@ from flask import jsonify, abort, make_response, request
 # sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from models import storage
 from models.review import Review
-from models.places import Place
+from models.place import Place
 from api.v1.views import app_views
 
 
@@ -29,7 +29,6 @@ def review_by_place(place_id):
 def get_review(review_id=None):
     """retrieve review by id"""
     review = storage.get("Review", review_id)
-    print(dir(review))
     if review is not None:
         return jsonify(review.to_dict())
     else:
