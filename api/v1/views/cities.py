@@ -69,8 +69,7 @@ def update_city(city_id):
 @app_views.route(
     '/cities/<city_id>/', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
-    """if state_id is not None find and \
-        delete state_info"""
+    """if state_id is not None find and delete state_info"""
     city_info = storage.get("City", city_id)
     if city_info is None:
         abort(404)
