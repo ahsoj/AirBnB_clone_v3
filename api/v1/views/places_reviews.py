@@ -20,17 +20,18 @@ def review_by_place(place_id):
         for review in place.reviews:
             _list_of_review.append(review.to_dict())
         return jsonify(_list_of_review)
-    abort(404)
+    else:
+        abort(404)
 
 
-"""
-@app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
-def get_tmp():
-    place = []
-    for review in list(storage.all("Review").values()):
-        place.append(review.to_dict())
-    return jsonify(place)
-    # abort(404)"""
+
+#@app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
+#def get_tmp():
+   # place = []
+    #for review in list(storage.all("Review").values()):
+     #   place.append(review.to_dict())
+   # return jsonify(place)
+    # abort(404)'''
 
 
 @app_views.route(
@@ -41,7 +42,8 @@ def get_review(review_id=None):
     print(dir(review))
     if review is not None:
         return jsonify(review.to_dict())
-    abort(404)
+    else:
+        abort(404)
 
 
 @app_views.route(
@@ -60,7 +62,7 @@ def post_review(place_id):
         abort(404)
     if not storage.get("Place", place_id):
         abort(404)
-    new_review = Review(**kwargs)  # request.get_json())
+    new_review = Review(**kwargs)
     new_review.save()
     return make_response(jsonify(new_review.to_dict()), 201)
 
