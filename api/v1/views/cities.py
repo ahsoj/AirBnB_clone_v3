@@ -38,7 +38,7 @@ def get_city(city_id=None):
 def post_city(state_id):
     """post new state"""
     if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     kwargs = request.get_json()
@@ -52,7 +52,7 @@ def post_city(state_id):
 def update_city(city_id):
     """if state_id is not None find and update state"""
     if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        return abort(400, description="Not a JSON")
     update_city = storage.get("City", city_id)
     if update_city is None:
         abort(404)
