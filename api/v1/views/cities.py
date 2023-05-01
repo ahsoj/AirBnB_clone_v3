@@ -45,6 +45,7 @@ def post_city(state_id):
     if len(state) == 0:
         abort(404)
     kwargs = request.get_json()
+    kwargs['state_id'] = state_id
     new_city = City(**kwargs)
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
