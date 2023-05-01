@@ -60,6 +60,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """
+          Returns the object based on the class and its ID,or None if not found
           id: str
           cls: class
           rType: {} | None
@@ -73,8 +74,9 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-          cls: class
-          rType: int{}
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        cls = class
         """
         return len(
                 self.all(cls) if isinstance(cls, str)
