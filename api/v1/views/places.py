@@ -45,10 +45,12 @@ def post_place(city_id):
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     kwargs = request.get_json()
     kwargs['city_id'] = city_id
+    if not storage.get("City", city_id):
+        abort(404)
     user_id = kwargs['user_id']
     if not storage.get("User", user_id):
         abort(404)
-    new_place = Place(**kwargs)  # request.get_json())
+    new_place = Place(**kwargs)
     new_place.save()
     return make_response(jsonify(new_place.to_dict()), 201)
 
