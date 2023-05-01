@@ -41,8 +41,10 @@ def post_city(state_id):
         return abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         return abort(400, description="Missing name")
+    state = storage.get("State", state_id)
+    if len(state) == 0:
+        abort(404)
     kwargs = request.get_json()
-    kwargs['state_id'] = state_id
     new_city = City(**kwargs)
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
