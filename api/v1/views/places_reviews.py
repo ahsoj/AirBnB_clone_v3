@@ -6,7 +6,7 @@ from flask import jsonify, abort, make_response, request
 # sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from models import storage
 from models.review import Review
-from models.place import Place
+from models.places import Place
 from api.v1.views import app_views
 
 
