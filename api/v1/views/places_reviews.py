@@ -15,7 +15,6 @@ from api.v1.views import app_views
 def review_by_place(place_id):
     """list all reviews"""
     place = storage.get("Place", place_id)
-    # print(dir(place), "Done")
     if place is not None:
         _list_of_review = []
         for review in place.reviews:
@@ -24,13 +23,14 @@ def review_by_place(place_id):
     abort(404)
 
 
+"""
 @app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
 def get_tmp():
     place = []
     for review in list(storage.all("Review").values()):
         place.append(review.to_dict())
     return jsonify(place)
-    # abort(404)
+    # abort(404)"""
 
 
 @app_views.route(
