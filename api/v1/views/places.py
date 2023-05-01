@@ -63,9 +63,9 @@ def update_place(place_id):
         for key, value in request.get_json().items():
             if key not in \
                     ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
-                setattr(update_city, key, value)
-        update_city.save()
-        return make_response(jsonify(update_city.to_dict()), 200)
+                setattr(update_place, key, value)
+        update_place.save()
+        return make_response(jsonify(update_place.to_dict()), 200)
     else:
         abort(404)
 
