@@ -42,7 +42,7 @@ def post_city(state_id):
     if 'name' not in request.get_json():
         return abort(400, description="Missing name")
     state = storage.get("State", state_id)
-    if len(state) == 0:
+    if state is None:
         abort(404)
     kwargs = request.get_json()
     kwargs['state_id'] = state_id
