@@ -56,11 +56,12 @@ def post_review(place_id):
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     kwargs = request.get_json()
     user_id = kwargs['user_id']
-    if not storage.get("User", user_id):
+    kwargs['place_id'] = place_id
+    if storage.get("User", user_id) is None:
         abort(404)
-    if not storage.get("Place", place_id):
+    if storage.get("Place", place_id)is None:
         abort(404)
-    new_review = Review(**kwargs)  # request.get_json())
+    new_review = Review(**kwargs)
     new_review.save()
     return make_response(jsonify(new_review.to_dict()), 201)
 
