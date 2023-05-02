@@ -5,6 +5,7 @@ from flask import jsonify, abort, make_response, request
 # import sys
 # sys.path.insert(1, "/tmp_api/AirBnB_clone_v3")
 from models import storage
+from models.user import User
 from models.review import Review
 from models.place import Place
 from api.v1.views import app_views
@@ -15,33 +16,24 @@ from api.v1.views import app_views
 def review_by_place(place_id):
     """list all reviews"""
     place = storage.get("Place", place_id)
-    # print(dir(place), "Done")
     if place is not None:
         _list_of_review = []
         for review in place.reviews:
             _list_of_review.append(review.to_dict())
         return jsonify(_list_of_review)
-    abort(404)
-
-
-@app_views.route('/reviews/', methods=['GET'], strict_slashes=False)
-def get_tmp():
-    place = []
-    for review in list(storage.all("Review").values()):
-        place.append(review.to_dict())
-    return jsonify(place)
-    # abort(404)
+    else:
+        abort(404)
 
 
 @app_views.route(
     '/reviews/<review_id>/', methods=['GET'], strict_slashes=False)
 def get_review(review_id=None):
     """retrieve review by id"""
-    review = storage.get("Review", review_id)
-    print(dir(review))
-    if review is not None:
-        return jsonify(review.to_dict())
-    abort(404)
+    review_obj = storage.get("Review", review_id)
+    if review_obj is not None:
+        return jsonify(review_obj.to_dict())
+    else:
+        abort(404)
 
 
 @app_views.route(
